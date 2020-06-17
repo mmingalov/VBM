@@ -1,7 +1,7 @@
 use VBM;
 go
 
---Справочник сводная информация по портфелям
+--РЎРїСЂР°РІРѕС‡РЅРёРє СЃРІРѕРґРЅР°СЏ РёРЅС„РѕСЂРјР°С†РёСЏ РїРѕ РїРѕСЂС‚С„РµР»СЏРј
 select 
 	 P.ID_PORTFOLIO
 	,P.TOP_MONTH
@@ -17,7 +17,7 @@ select
 		,UCW.COUNT1 as PERIOD_total
 		,CASE
 			WHEN isnull(UCW2.COUNT2,0) = 0 
-				THEN N'окупился'
+				THEN N'РѕРєСѓРїРёР»СЃСЏ'
 				ELSE cast(isnull(UCW2.COUNT2,0) + 1 as nvarchar)
 				
 		END as PERIOD_current

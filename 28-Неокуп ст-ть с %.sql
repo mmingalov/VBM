@@ -1,6 +1,6 @@
 use VBM;
 go
-/* здесь будут лежать данные для VIEW */
+/* Р·РґРµСЃСЊ Р±СѓРґСѓС‚ Р»РµР¶Р°С‚СЊ РґР°РЅРЅС‹Рµ РґР»В¤ VIEW */
 IF OBJECT_ID('dbo.tmp_UNPAY_COST_WITH','U') IS NOT NULL
 	DROP TABLE tmp_UNPAY_COST_WITH;
 CREATE TABLE tmp_UNPAY_COST_WITH (
@@ -8,7 +8,7 @@ CREATE TABLE tmp_UNPAY_COST_WITH (
 	PERIOD date NOT NULL,
 	[SUM] decimal(18,5) NOT NULL)
 	
-/* сперва считаем в месяцах покупки, добавляем их в tmp_UNPAY_COST_WITH */
+/* СЃРїРµСЂРІР° СЃС‡РёС‚Р°РµРј РІ РјРµСЃВ¤С†Р°С… РїРѕРєСѓРїРєРё, РґРѕР±Р°РІР»В¤РµРј РёС… РІ tmp_UNPAY_COST_WITH */
 insert into tmp_UNPAY_COST_WITH (ID_PORTFOLIO,PERIOD,[SUM])
 select 
 	CFP.ID_PORTFOLIO,
@@ -21,7 +21,7 @@ from GetCOLLECTIONS_FACTandPRED CFP left join GetCOSTS_TOTAL_FACT CTF
 on CFP.ID_PORTFOLIO = CTF.ID_PORTFOLIO and CFP.PERIOD = CTF.PERIOD
 where CFP.PERIOD = (select I.PURCHASE_DATE from PORTFOLIOS I where I.ID_PORTFOLIO = CFP.ID_PORTFOLIO)
 
-/* теперь считаем все месяца, пока не закончен жизненный цикл портфеля*/
+/* С‚РµРїРµСЂСЊ СЃС‡РёС‚Р°РµРј РІСЃРµ РјРµСЃВ¤С†Р°, РїРѕРєР° РЅРµ Р·Р°РєРѕРЅС‡РµРЅ Р¶РёР·РЅРµРЅРЅС‹Р№ С†РёРєР» РїРѕСЂС‚С„РµР»В¤*/
 	
 declare @monthCur date 
 declare @monthStart date
@@ -40,7 +40,7 @@ FETCH NEXT FROM CURSOR_P INTO @portfolio
 --FETCH CURSOR_P into @portfolio
 WHILE @@FETCH_STATUS = 0
 BEGIN
-	--set @portfolio = N'ВЭБ'
+	--set @portfolio = N'В¬РЃР…'
 	set @monthStart = (select PURCHASE_DATE from PORTFOLIOS where ID_PORTFOLIO = @portfolio) 
 	set @monthEnd = (select ENDLIFE_DATE from PORTFOLIOS where ID_PORTFOLIO = @portfolio) 
 	set @monthCur = @monthStart

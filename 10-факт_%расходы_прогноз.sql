@@ -1,6 +1,6 @@
 use VBM;
 go
-/* здесь будут лежать данные для VIEW */
+/* Р·РґРµСЃСЊ Р±СѓРґСѓС‚ Р»РµР¶Р°С‚СЊ РґР°РЅРЅС‹Рµ РґР»В¤ VIEW */
 IF OBJECT_ID('dbo.tmp_COSTS_PCT_PRED','U') IS NOT NULL
 	DROP TABLE tmp_COSTS_PCT_PRED;
 CREATE TABLE tmp_COSTS_PCT_PRED (
@@ -8,7 +8,7 @@ CREATE TABLE tmp_COSTS_PCT_PRED (
 	PERIOD date NOT NULL,
 	[SUM] decimal(18,5) NOT NULL)
 /*	
-/* сперва считаем в месяцах покупки, добавляем их в tmp_COSTS_PCT_PRED */
+/* СЃРїРµСЂРІР° СЃС‡РёС‚Р°РµРј РІ РјРµСЃВ¤С†Р°С… РїРѕРєСѓРїРєРё, РґРѕР±Р°РІР»В¤РµРј РёС… РІ tmp_COSTS_PCT_PRED */
 insert into tmp_COSTS_PCT_PRED (ID_PORTFOLIO,PERIOD,[SUM])
 select 
 	CFP.ID_PORTFOLIO,
@@ -22,7 +22,7 @@ on CFP.ID_PORTFOLIO = CIN.ID_PORTFOLIO and CFP.PERIOD = CIN.PERIOD
 where CFP.PERIOD = (select I.PURCHASE_DATE from PORTFOLIOS I where I.ID_PORTFOLIO = CFP.ID_PORTFOLIO)
 */
 
-/* теперь считаем все месяца, пока не закончен жизненный цикл портфеля*/
+/* С‚РµРїРµСЂСЊ СЃС‡РёС‚Р°РµРј РІСЃРµ РјРµСЃВ¤С†Р°, РїРѕРєР° РЅРµ Р·Р°РєРѕРЅС‡РµРЅ Р¶РёР·РЅРµРЅРЅС‹Р№ С†РёРєР» РїРѕСЂС‚С„РµР»В¤*/
 	
 declare @monthStart date	
 declare @monthCur date 

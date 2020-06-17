@@ -20,7 +20,7 @@ from
 	dbo.GetActualCOLLECTIONS_PRED
 where PERIOD > (dbo.ufn_GetLatestPeriod_COLLECTIONS_FACT(N'%'))
 
---путь второй. К сожалению он не подходит для VIEW
+--РїСѓС‚СЊ РІС‚РѕСЂРѕР№. Рљ СЃРѕР¶Р°Р»РµРЅРёСЋ РѕРЅ РЅРµ РїРѕРґС…РѕРґРёС‚ РґР»СЏ VIEW
 declare @date1 as date = (dbo.ufn_GetLatestPeriod_COLLECTIONS_FACT(N'%'))
 declare @sql as nvarchar(1024) = 
 '

@@ -7,7 +7,7 @@ GO
 -- Author:		<Maxim Mingalov>
 -- Create date: <29.08.2014>
 -- Update date: <28.09.2014> - ufn usage was replaced
--- Description:	<Обновление таблицы, содержащей информацию о прогнозном периоде Фактических %расходов>
+-- Description:	<СњР±РЅРѕРІР»РµРЅРёРµ С‚Р°Р±Р»РёС†С‹, СЃРѕРґРµСЂР¶Р°С‰РµР№ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РїСЂРѕРіРЅРѕР·РЅРѕРј РїРµСЂРёРѕРґРµ вЂР°РєС‚РёС‡РµСЃРєРёС… %СЂР°СЃС…РѕРґРѕРІ>
 -- =============================================
 IF OBJECT_ID('sp_Updating_tmp_COSTS_PCT_PRED','P') IS NOT NULL
 	DROP PROCEDURE sp_Updating_tmp_COSTS_PCT_PRED;
@@ -16,7 +16,7 @@ GO
 CREATE PROCEDURE sp_Updating_tmp_COSTS_PCT_PRED
 AS
 BEGIN
-	/* здесь будут лежать данные для VIEW */
+	/* Р·РґРµСЃСЊ Р±СѓРґСѓС‚ Р»РµР¶Р°С‚СЊ РґР°РЅРЅС‹Рµ РґР»В¤ VIEW */
 	IF OBJECT_ID('dbo.tmp_COSTS_PCT_PRED','U') IS NOT NULL
 		DROP TABLE tmp_COSTS_PCT_PRED;
 	CREATE TABLE tmp_COSTS_PCT_PRED 
@@ -37,7 +37,7 @@ BEGIN
 	ALTER TABLE [dbo].[tmp_COSTS_PCT_PRED] ADD  CONSTRAINT [DF_tmp_COSTS_PCT_PRED_INSERTED_BY]  DEFAULT (suser_sname()) FOR [INSERTED_BY]
 	ALTER TABLE [dbo].[tmp_COSTS_PCT_PRED] ADD  CONSTRAINT [DF_tmp_COSTS_PCT_PRED_DATA_SOURCE]  DEFAULT ('User') FOR [DATA_SOURCE]
 
-	/* теперь считаем все месяца, пока не закончен жизненный цикл портфеля*/
+	/* С‚РµРїРµСЂСЊ СЃС‡РёС‚Р°РµРј РІСЃРµ РјРµСЃВ¤С†Р°, РїРѕРєР° РЅРµ Р·Р°РєРѕРЅС‡РµРЅ Р¶РёР·РЅРµРЅРЅС‹Р№ С†РёРєР» РїРѕСЂС‚С„РµР»В¤*/
 		
 	declare @monthStart date	
 	declare @monthCur date 
@@ -48,7 +48,7 @@ BEGIN
 	declare @nn int 
 
 	DECLARE CURSOR_P CURSOR FOR
-		select ID_PORTFOLIO from PORTFOLIOS where ID_PORTFOLIO <> N'ВЭБ_Облигации'
+		select ID_PORTFOLIO from PORTFOLIOS where ID_PORTFOLIO <> N'В¬РЃР…_СњР±Р»РёРіР°С†РёРё'
 	FOR READ ONLY
 
 	OPEN CURSOR_P
@@ -89,4 +89,4 @@ DECLARE	@return_value int
 EXEC	@return_value = [dbo].[sp_Updating_tmp_COSTS_PCT_PRED]
 SELECT	'Return Value' = @return_value
 
--- около 11 мину
+-- РѕРєРѕР»Рѕ 11 РјРёРЅСѓ

@@ -10,7 +10,7 @@ GO
 -- =============================================
 -- Author:		<Maxim Mingalov>
 -- Create date: <01.09.2014>
--- Description:	<Обновление таблицы, содержащей информацию о Неокуп ст-ти с %>
+-- Description:	<РћР±РЅРѕРІР»РµРЅРёРµ С‚Р°Р±Р»РёС†С‹, СЃРѕРґРµСЂР¶Р°С‰РµР№ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РќРµРѕРєСѓРї СЃС‚-С‚Рё СЃ %>
 -- =============================================
 IF OBJECT_ID('sp_Updating_tmp_UNPAY_COST_WITH','P') IS NOT NULL
 	DROP PROCEDURE sp_Updating_tmp_UNPAY_COST_WITH;
@@ -24,7 +24,7 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	/* здесь будут лежать данные для VIEW */
+	/* Р·РґРµСЃСЊ Р±СѓРґСѓС‚ Р»РµР¶Р°С‚СЊ РґР°РЅРЅС‹Рµ РґР»СЏ VIEW */
 	IF OBJECT_ID('dbo.tmp_UNPAY_COST_WITH','U') IS NOT NULL
 		DROP TABLE tmp_UNPAY_COST_WITH;
 	CREATE TABLE tmp_UNPAY_COST_WITH (
@@ -46,7 +46,7 @@ BEGIN
 	ALTER TABLE [dbo].[tmp_UNPAY_COST_WITH] ADD  CONSTRAINT [DF_tmp_UNPAY_COST_WITH_INSERTED_BY]  DEFAULT (suser_sname()) FOR [INSERTED_BY]
 	ALTER TABLE [dbo].[tmp_UNPAY_COST_WITH] ADD  CONSTRAINT [DF_tmp_UNPAY_COST_WITH_DATA_SOURCE]  DEFAULT ('User') FOR [DATA_SOURCE]
 		
-	/* сперва считаем в месяцах покупки, добавляем их в tmp_UNPAY_COST_WITH */
+	/* СЃРїРµСЂРІР° СЃС‡РёС‚Р°РµРј РІ РјРµСЃСЏС†Р°С… РїРѕРєСѓРїРєРё, РґРѕР±Р°РІР»СЏРµРј РёС… РІ tmp_UNPAY_COST_WITH */
 	insert into tmp_UNPAY_COST_WITH ([ID_PORTFOLIO],[PERIOD],[SUM],[TYPE1])
 	select 
 		CFP.ID_PORTFOLIO,
@@ -60,7 +60,7 @@ BEGIN
 	on CFP.ID_PORTFOLIO = CTF.ID_PORTFOLIO and CFP.PERIOD = CTF.PERIOD
 	where CFP.PERIOD = (select I.PURCHASE_DATE from PORTFOLIOS I where I.ID_PORTFOLIO = CFP.ID_PORTFOLIO)
 
-	/* теперь считаем все месяца, пока не закончен жизненный цикл портфеля*/
+	/* С‚РµРїРµСЂСЊ СЃС‡РёС‚Р°РµРј РІСЃРµ РјРµСЃСЏС†Р°, РїРѕРєР° РЅРµ Р·Р°РєРѕРЅС‡РµРЅ Р¶РёР·РЅРµРЅРЅС‹Р№ С†РёРєР» РїРѕСЂС‚С„РµР»СЏ*/
 		
 	declare @monthCur date 
 	declare @monthStart date
@@ -70,7 +70,7 @@ BEGIN
 	declare @nn int 
 
 	DECLARE CURSOR_P CURSOR FOR
-		select ID_PORTFOLIO from PORTFOLIOS --where ID_PORTFOLIO = N'Альфа_4'
+		select ID_PORTFOLIO from PORTFOLIOS --where ID_PORTFOLIO = N'РђР»СЊС„Р°_4'
 	FOR READ ONLY
 
 	OPEN CURSOR_P
@@ -79,7 +79,7 @@ BEGIN
 	--FETCH CURSOR_P into @portfolio
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
-		--set @portfolio = N'Альфа_4'
+		--set @portfolio = N'РђР»СЊС„Р°_4'
 		set @monthStart = (select PURCHASE_DATE from PORTFOLIOS where ID_PORTFOLIO = @portfolio) 
 		set @monthEnd = (select ENDLIFE_DATE from PORTFOLIOS where ID_PORTFOLIO = @portfolio) 
 		set @monthCur = @monthStart

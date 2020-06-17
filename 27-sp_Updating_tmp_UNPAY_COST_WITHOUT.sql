@@ -5,7 +5,7 @@ GO
 -- =============================================
 -- Author:		<Maxim Mingalov>
 -- Create date: <28.08.2014>
--- Description:	<Обновление таблицы, содержащей информацию о Неокуп ст-ти без %>
+-- Description:	<СњР±РЅРѕРІР»РµРЅРёРµ С‚Р°Р±Р»РёС†С‹, СЃРѕРґРµСЂР¶Р°С‰РµР№ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РЊРµРѕРєСѓРї СЃС‚-С‚Рё Р±РµР· %>
 -- =============================================
 IF OBJECT_ID('sp_Updating_tmp_UNPAY_COST_WITHOUT','P') IS NOT NULL
 	DROP PROCEDURE sp_Updating_tmp_UNPAY_COST_WITHOUT;
@@ -19,7 +19,7 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	/* здесь будут лежать данные для VIEW */
+	/* Р·РґРµСЃСЊ Р±СѓРґСѓС‚ Р»РµР¶Р°С‚СЊ РґР°РЅРЅС‹Рµ РґР»В¤ VIEW */
 	IF OBJECT_ID('dbo.tmp_UNPAY_COST_WITHOUT','U') IS NOT NULL
 		DROP TABLE tmp_UNPAY_COST_WITHOUT;
 	CREATE TABLE tmp_UNPAY_COST_WITHOUT 
@@ -42,7 +42,7 @@ BEGIN
 	ALTER TABLE [dbo].[tmp_UNPAY_COST_WITHOUT] ADD  CONSTRAINT [DF_tmp_UNPAY_COST_WITHOUT_INSERTED_BY]  DEFAULT (suser_sname()) FOR [INSERTED_BY]
 	ALTER TABLE [dbo].[tmp_UNPAY_COST_WITHOUT] ADD  CONSTRAINT [DF_tmp_UNPAY_COST_WITHOUT_DATA_SOURCE]  DEFAULT ('User') FOR [DATA_SOURCE]
 
-	/* сперва считаем в месяцах покупки, добавляем их в tmp_UNPAY_COST_WITHOUT */
+	/* СЃРїРµСЂРІР° СЃС‡РёС‚Р°РµРј РІ РјРµСЃВ¤С†Р°С… РїРѕРєСѓРїРєРё, РґРѕР±Р°РІР»В¤РµРј РёС… РІ tmp_UNPAY_COST_WITHOUT */
 	insert into tmp_UNPAY_COST_WITHOUT ([ID_PORTFOLIO],[PERIOD],[SUM],[TYPE1])
 	select 
 		CFP.ID_PORTFOLIO,
@@ -56,7 +56,7 @@ BEGIN
 	on CFP.ID_PORTFOLIO = CIN.ID_PORTFOLIO and CFP.PERIOD = CIN.PERIOD
 	where CFP.PERIOD = (select I.PURCHASE_DATE from PORTFOLIOS I where I.ID_PORTFOLIO = CFP.ID_PORTFOLIO)
 
-	/* теперь считаем все месяца, пока не закончен жизненный цикл портфеля*/
+	/* С‚РµРїРµСЂСЊ СЃС‡РёС‚Р°РµРј РІСЃРµ РјРµСЃВ¤С†Р°, РїРѕРєР° РЅРµ Р·Р°РєРѕРЅС‡РµРЅ Р¶РёР·РЅРµРЅРЅС‹Р№ С†РёРєР» РїРѕСЂС‚С„РµР»В¤*/
 		
 	declare @monthCur date 
 	declare @monthStart date
@@ -75,7 +75,7 @@ BEGIN
 	--FETCH CURSOR_P into @portfolio
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
-		--set @portfolio = N'ВЭБ'
+		--set @portfolio = N'В¬РЃР…'
 		set @monthStart = (select PURCHASE_DATE from PORTFOLIOS where ID_PORTFOLIO = @portfolio) 
 		set @monthEnd = (select ENDLIFE_DATE from PORTFOLIOS where ID_PORTFOLIO = @portfolio) 
 		set @monthCur = @monthStart
