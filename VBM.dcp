@@ -1,0 +1,11 @@
+[ConnectionProfile]
+ConnectionType=Native
+Database=VBM
+Dbms=SNC SQL Native Client
+DelimitIdentifier=Yes
+DisableBind=0
+Provider=SQLNCLI10
+ProviderString=OLE DB Services=-4
+ServerName=MOW-LAP-19
+TrimSpaces=0
+TrustedConnection=1

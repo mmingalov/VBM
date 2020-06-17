@@ -1,0 +1,13 @@
+USE VBM
+GO
+
+select I.TABLE_NAME, I.COLUMN_NAME, '' AS N'Название столбца', I.ORDINAL_POSITION, isnull(I.COLUMN_DEFAULT,'') as COLUMN_DEFAULT, I.IS_NULLABLE, I.DATA_TYPE, isnull(I.CHARACTER_MAXIMUM_LENGTH,'') as LEN,
+isnull(I.NUMERIC_PRECISION, '') as NumPrecision, isnull(I.NUMERIC_PRECISION_RADIX,'') as NumPrecisionRadix, isnull(I.NUMERIC_SCALE,'') as NumScale
+from INFORMATION_SCHEMA.COLUMNS I 
+--where I.COLUMN_NAME IN ('DATE_INSERTED', 'DATE_UPDATED', 'INSERTED_BY', 'UPDATED_BY', 'DATA_SOURCE'*/)
+
+where I.TABLE_NAME NOT like 'Get%'
+
+ order by 1,3
+ 
+ --select * from INFORMATION_SCHEMA.COLUMNS I 
